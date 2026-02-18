@@ -1,22 +1,55 @@
 
 import java.lang.reflect.Method;
 
+/**
+* Головний клас додатки
+*/
 public class Main {
-    public static void main(String[] args) {
 
-        Class<?> classInfo = Calculator.class;
+/**
+ * Метод, позначений анотацією з параметрами.
+ * Тільки для анотації
+ */
+@TwoOperandsAnno(
+        firstOperand = 21,
+        secondOperand = 3,
+        operation = "sum"
+)
+public static void calculateTwoOperands() {
+}
 
-        try {
-            Method methodSumInfo = classInfo.getMethod("sum", int.class, int.class);
+/**
+ * Точка входу додатки
+ *
+ * @param args аргументи командного рядка
+ * @throws Exception якщо помилка reflection
+ */
+public static void main(String[] args) throws  Exception {
+        Method calculateTwoOperandsMethodInfo = Main.class.getMethod("calculateTwoOperands");
 
-            TwoOperandsAnno methodSumAnno = methodSumInfo.getAnnotation(TwoOperandsAnno.class);
+        if (calculateTwoOperandsMethodInfo.isAnnotationPresent(TwoOperandsAnno.class)) {
+            double first = calculateTwoOperandsMethodInfo.getAnnotation(TwoOperandsAnno.class).firstOperand();
+            double second = calculateTwoOperandsMethodInfo.getAnnotation(TwoOperandsAnno.class).secondOperand();
+            String operation = calculateTwoOperandsMethodInfo.getAnnotation(TwoOperandsAnno.class).operation();
 
-            int result = Calculator.sum(methodSumAnno.firstOperand(), methodSumAnno.secondOperand());
+            Calculator calculator = new Calculator(first, second);
 
-            System.out.println(result);
+            double result = 0.00;
+            if  (operation.equals("sum")) {
+                result = calculator.sum(first, second);
+            } else if (operation.equals("sub")) {
+                result = calculator.sub(first, second);
+            } else if (operation.equals("multiply")) {
+                result = calculator.mul(first, second);
+            } else if (operation.equals("div")) {
+                result = calculator.div(first, second);
+            } else {
+                System.out.println("Помилка! Дана операція не реалізована в даному додатку!");
+            }
 
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException(e);
+            System.out.println(operation + " of " + first + " and " + second + " equals " + result);
         }
-    }
+
+
+}
 }

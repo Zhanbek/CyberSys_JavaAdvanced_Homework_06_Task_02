@@ -1,11 +1,31 @@
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
-@Target(ElementType.METHOD)
+/**
+ * Анотація для передачі параметрів калькулятору.
+ * Використовується для вказівки двох чисел і операції.
+ */
+@Documented
 @Retention(RetentionPolicy.RUNTIME)
 public @interface TwoOperandsAnno {
-    int firstOperand() default 0;
-    int secondOperand() default 0;
+    /**
+     * Перший операнд.
+     *
+     * @return перше число
+     */
+    double firstOperand() default 0;
+
+    /**
+     * Другий операнд.
+     *
+     * @return друге число
+     */
+    double secondOperand() default 0;
+
+    /**
+     * Тип операції.
+     * Можливі значення: add, sub, mul, div
+     *
+     * @return рядок операції
+     */
+    String operation() default "sum";  // sum, sub, mul, div
 }
