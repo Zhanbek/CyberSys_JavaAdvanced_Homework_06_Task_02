@@ -2,29 +2,29 @@
 import java.lang.reflect.Method;
 
 /**
-* Головний клас додатки
-*/
+ * Головний клас додатки
+ */
 public class Main {
 
-/**
- * Метод, позначений анотацією з параметрами.
- * Тільки для анотації
- */
-@TwoOperandsAnno(
-        firstOperand = 21,
-        secondOperand = 3,
-        operation = "sum"
-)
-public static void calculateTwoOperands() {
-}
+    /**
+     * Метод, позначений анотацією з параметрами.
+     * Тільки для анотації
+     */
+    @TwoOperandsAnno(
+            firstOperand = 21,
+            secondOperand = 3,
+            operation = "sum"
+    )
+    public static void calculateTwoOperands() {
+    }
 
-/**
- * Точка входу додатки
- *
- * @param args аргументи командного рядка
- * @throws Exception якщо помилка reflection
- */
-public static void main(String[] args) throws  Exception {
+    /**
+     * Точка входу додатки
+     *
+     * @param args аргументи командного рядка
+     * @throws Exception якщо помилка reflection
+     */
+    public static void main(String[] args) throws Exception {
         Method calculateTwoOperandsMethodInfo = Main.class.getMethod("calculateTwoOperands");
 
         if (calculateTwoOperandsMethodInfo.isAnnotationPresent(TwoOperandsAnno.class)) {
@@ -35,7 +35,7 @@ public static void main(String[] args) throws  Exception {
             Calculator calculator = new Calculator(first, second);
 
             double result = 0.00;
-            if  (operation.equals("sum")) {
+            if (operation.equals("sum")) {
                 result = calculator.sum(first, second);
             } else if (operation.equals("sub")) {
                 result = calculator.sub(first, second);
@@ -51,5 +51,5 @@ public static void main(String[] args) throws  Exception {
         }
 
 
-}
+    }
 }
