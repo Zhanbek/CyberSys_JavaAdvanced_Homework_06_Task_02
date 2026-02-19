@@ -1,5 +1,6 @@
 
 import java.lang.reflect.Method;
+import java.util.Scanner;
 
 /**
  * Головний клас додатки
@@ -12,8 +13,7 @@ public class Main {
      */
     @TwoOperandsAnno(
             firstOperand = 21,
-            secondOperand = 3,
-            operation = "sum"
+            secondOperand = 3
     )
     public static void calculateTwoOperands() {
     }
@@ -28,26 +28,40 @@ public class Main {
         Method calculateTwoOperandsMethodInfo = Main.class.getMethod("calculateTwoOperands");
 
         if (calculateTwoOperandsMethodInfo.isAnnotationPresent(TwoOperandsAnno.class)) {
+            System.out.println();
+            System.out.println("Витягуємо значення операндів з анотації...");
+            System.out.println();
             double first = calculateTwoOperandsMethodInfo.getAnnotation(TwoOperandsAnno.class).firstOperand();
             double second = calculateTwoOperandsMethodInfo.getAnnotation(TwoOperandsAnno.class).secondOperand();
-            String operation = calculateTwoOperandsMethodInfo.getAnnotation(TwoOperandsAnno.class).operation();
+
+            System.out.printf("Значення першого операнда = %f", first);
+            System.out.println();
+            System.out.printf("Значення другого операнда = %f", second);
+            System.out.println();
+
+            System.out.println();
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Вкажіть операцію: '+', '-', '*', '/': ");
+            String operation = scanner.nextLine();
 
             Calculator calculator = new Calculator(first, second);
 
             double result = 0.00;
-            if (operation.equals("sum")) {
+            if (operation.equals("+")) {
                 result = calculator.sum(first, second);
-            } else if (operation.equals("sub")) {
+            } else if (operation.equals("-")) {
                 result = calculator.sub(first, second);
-            } else if (operation.equals("multiply")) {
+            } else if (operation.equals("*")) {
                 result = calculator.mul(first, second);
-            } else if (operation.equals("div")) {
+            } else if (operation.equals("/")) {
                 result = calculator.div(first, second);
             } else {
-                System.out.println("Помилка! Дана операція не реалізована в даному додатку!");
+                System.out.printf("Помилка! Дана %s операція не реалізована в даному додатку!%n", operation);
             }
 
-            System.out.println(operation + " of " + first + " and " + second + " equals " + result);
+            System.out.println();
+            System.out.printf("Результат операції %f %s %f  = %f", first, operation, second, result);
+            System.out.println();
         }
 
 
